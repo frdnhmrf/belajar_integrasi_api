@@ -28,8 +28,8 @@ class HeadingNewsWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
-            child: Image.asset(
-              image,
+            child: Image.network(
+              'http://localhost:8055/assets/$image',
               fit: BoxFit.cover,
               width: double.infinity,
             ),
