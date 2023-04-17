@@ -1,10 +1,15 @@
 class NewsResponse {
-  NewsModel? data;
+  List<NewsModel>? data;
 
   NewsResponse({this.data});
 
   NewsResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? NewsModel.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = <NewsModel>[];
+      json['data'].forEach((v) {
+        data!.add(NewsModel.fromJson(v));
+      });
+    }
   }
 }
 
@@ -34,17 +39,17 @@ class NewsModel {
       this.author,
       this.category});
 
-  factory NewsModel.fromJson(Map<String, dynamic> json) => NewsModel(
-        id: json['id'],
-        userCreated: json['user_created'],
-        dateCreated: json['date_created'],
-        userUpdated: json['user_updated'],
-        dateUpdated: json['date_updated'],
-        title: json['title'],
-        subtitle: json['subtitle'],
-        content: json['content'],
-        newsImage: json['news_image'],
-        author: json['author'],
-        category: json['category'],
-      );
+  NewsModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userCreated = json['user_created'];
+    dateCreated = json['date_created'];
+    userUpdated = json['user_updated'];
+    dateUpdated = json['date_updated'];
+    title = json['title'];
+    subtitle = json['subtitle'];
+    content = json['content'];
+    newsImage = json['news_image'];
+    author = json['author'];
+    category = json['category'];
+  }
 }

@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kompas_app_clone/src/constants/app_sizes.dart';
 import 'package:flutter_kompas_app_clone/src/constants/theme.dart';
+import 'package:flutter_kompas_app_clone/src/features/news/domain/news_model.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({
     super.key,
     this.onTap,
     this.onPressedMore,
+    required this.news,
   });
 
   final VoidCallback? onTap;
   final VoidCallback? onPressedMore;
+  final NewsModel news;
 
   @override
   Widget build(BuildContext context) {
+    String date =
+        news.dateCreated!.substring(0, 10).split('-').reversed.join('-');
+    String time = news.dateCreated!.substring(11, 16);
+
     return Column(
       children: [
         Container(
@@ -31,12 +38,12 @@ class NewsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Politik',
+                          news.category.toString(),
                           style: orangeTextStyle,
                         ),
                         gapH4,
                         Text(
-                          'Ketua DPR: Kita Harus Bisa Menangani Kebijakan AS yang Mengancam',
+                          news.title.toString(),
                           style: blackTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: semiBold,
@@ -52,9 +59,9 @@ class NewsCard extends StatelessWidget {
                     flex: 2,
                     child: Container(
                       decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage(
-                            'assets/img_news_one.png',
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            'http://localhost:8055/assets/${news.newsImage}',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -71,7 +78,7 @@ class NewsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '23 Jan 2023, 17: 40',
+                    '$date, $time',
                     style: blackTextStyle.copyWith(
                       fontSize: 12,
                     ),

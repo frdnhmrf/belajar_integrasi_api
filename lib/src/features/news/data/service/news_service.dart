@@ -28,4 +28,18 @@ class NewsService {
     final trend = await fetchNewsTrend(idNews);
     return trend;
   }
+
+  Future<NewsResponse> getNewsList() async {
+    final response = await http.get(Uri.parse('$baseUrlApi/news'));
+    try {
+      if (response.statusCode == 200) {
+        NewsResponse newsResponse =
+            NewsResponse.fromJson(jsonDecode(response.body));
+        return newsResponse;
+      }
+      throw Exception('Failed to load data');
+    } catch (e) {
+      throw Exception('Failed to load data');
+    }
+  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_kompas_app_clone/src/common_widgets/heading_news_widget.
 import 'package:flutter_kompas_app_clone/src/common_widgets/news_card.dart';
 import 'package:flutter_kompas_app_clone/src/constants/app_sizes.dart';
 import 'package:flutter_kompas_app_clone/src/constants/theme.dart';
+import 'package:flutter_kompas_app_clone/src/features/news/data/bloc/news_list_bloc/news_list_bloc.dart';
 import 'package:flutter_kompas_app_clone/src/features/news/data/bloc/trend_bloc/trend_bloc.dart';
 import 'package:flutter_kompas_app_clone/src/routing/app_router.dart';
 import 'package:flutter_kompas_app_clone/src/shared/enum.dart';
@@ -87,13 +88,30 @@ class HomeScreen extends StatelessWidget {
               return const SizedBox();
             },
           ),
-          Column(children: const [
-            NewsCard(),
-            NewsCard(),
-            NewsCard(),
-            NewsCard(),
-            NewsCard()
-          ]),
+          BlocBuilder<NewsListBloc, NewsListState>(
+            builder: (context, state) {
+              if (state.status == Status.loading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state.status == Status.error) {
+                return const Center(
+                  child: Text('Terjadi Kesalahan'),
+                );
+              } else if (state.status == Status.success) {
+                return Column(
+                  children: state.newsList.map(
+                    (news) {
+                      return NewsCard(
+                        news: news,
+                      );
+                    },
+                  ).toList(),
+                );
+              }
+              return const SizedBox();
+            },
+          ),
         ],
       ),
     );
