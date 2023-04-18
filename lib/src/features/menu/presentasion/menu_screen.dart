@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_kompas_app_clone/src/common_widgets/menu_category_card_widget.dart';
+import 'package:flutter_kompas_app_clone/src/features/menu/data/bloc/category_list_bloc/category_list_bloc.dart';
 import 'package:flutter_kompas_app_clone/src/routing/app_router.dart';
+import 'package:flutter_kompas_app_clone/src/shared/enum.dart';
 
 import 'package:go_router/go_router.dart';
 
@@ -38,16 +41,33 @@ class MenuScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         children: [
-          Wrap(
-              spacing: 10,
-              alignment: WrapAlignment.start,
-              runSpacing: 10,
-              runAlignment: WrapAlignment.spaceBetween,
-              children: const [
-                MenuCategoryCardWidget(),
-                MenuCategoryCardWidget(),
-                MenuCategoryCardWidget(),
-              ]),
+          BlocBuilder<CategoryListBloc, CategoryListState>(
+              builder: (context, state) {
+            if (state.status == Status.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state.status == Status.error) {
+              return const Center(
+                child: Text('Terjadi Kesalahan'),
+              );
+            } else if (state.status == Status.success) {
+              return Wrap(
+                spacing: 10,
+                alignment: WrapAlignment.start,
+                runSpacing: 10,
+                runAlignment: WrapAlignment.spaceBetween,
+                children: state.categoryList.map(
+                  (category) {
+                    return MenuCategoryCardWidget(
+                      category: category,
+                    );
+                  },
+                ).toList(),
+              );
+            }
+            return const SizedBox();
+          }),
         ],
       ),
     );

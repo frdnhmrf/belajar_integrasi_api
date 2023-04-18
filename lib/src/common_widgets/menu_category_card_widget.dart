@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_kompas_app_clone/src/shared/shared_values.dart';
+import 'package:flutter_kompas_app_clone/src/features/menu/domain/category_model.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter_kompas_app_clone/src/constants/app_sizes.dart';
@@ -11,7 +11,14 @@ import '../routing/app_router.dart';
 class MenuCategoryCardWidget extends StatelessWidget {
   const MenuCategoryCardWidget({
     Key? key,
+    this.onTap,
+    this.onPressedMore,
+    required this.category,
   }) : super(key: key);
+
+  final VoidCallback? onTap;
+  final VoidCallback? onPressedMore;
+  final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +37,8 @@ class MenuCategoryCardWidget extends StatelessWidget {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.15,
                 width: MediaQuery.of(context).size.width * 0.42,
-                child: Image.asset(
-                  'assets/img_category_one.png',
+                child: Image.network(
+                  'http://localhost:8055/assets/${category.categoryImage}',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -58,7 +65,7 @@ class MenuCategoryCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hiburan',
+                    category.name.toString(),
                     style: whiteTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: semiBold,
@@ -66,7 +73,7 @@ class MenuCategoryCardWidget extends StatelessWidget {
                   ),
                   gapH4,
                   Text(
-                    'Berita Entertaiment',
+                    category.subname.toString(),
                     overflow: TextOverflow.ellipsis,
                     style: whiteTextStyle,
                   ),
