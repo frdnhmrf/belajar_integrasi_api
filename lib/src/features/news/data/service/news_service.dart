@@ -42,4 +42,19 @@ class NewsService {
       throw Exception('Failed to load data');
     }
   }
+
+  Future<NewsModel> getDetailNews(String id) async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrlApi/news/$id'));
+
+      if (response.statusCode == 200) {
+        NewsModel newsModel =
+            NewsModel.fromJson(jsonDecode(response.body)['data']);
+        return newsModel;
+      }
+      throw Exception('Failed to load data');
+    } catch (e) {
+      throw Exception('Failed to load data');
+    }
+  }
 }

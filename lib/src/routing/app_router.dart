@@ -61,14 +61,24 @@ final goRouter = GoRouter(
           builder: (context, state) => const SettingScreen(),
         ),
         GoRoute(
+            path: 'main',
+            name: AppRoute.home.name,
+            builder: (context, state) => const MainScreen(),
+            routes: [
+              GoRoute(
+                  path: 'detail-news/:id',
+                  name: AppRoute.detailNews.name,
+                  builder: (context, state) {
+                    final query = state.params['id'];
+                    return DetailNewsScreen(
+                      id: query!,
+                    );
+                  }),
+            ]),
+        GoRoute(
           path: 'detail-menu',
           name: AppRoute.detailMenu.name,
           builder: (context, state) => const DetailMenuScreen(),
-        ),
-        GoRoute(
-          path: 'main',
-          name: AppRoute.home.name,
-          builder: (context, state) => const MainScreen(),
         ),
         GoRoute(
           path: 'saved',
@@ -77,11 +87,6 @@ final goRouter = GoRouter(
         GoRoute(
           path: 'menu',
           builder: (context, state) => const MenuScreen(),
-        ),
-        GoRoute(
-          path: 'detail-news',
-          name: AppRoute.detailNews.name,
-          builder: (context, state) => const DetailNewsScreen(),
         ),
         GoRoute(
           name: AppRoute.search.name,

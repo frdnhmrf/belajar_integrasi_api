@@ -77,7 +77,10 @@ class HomeScreen extends StatelessWidget {
                       title: state.news.title.toString(),
                       image: state.news.newsImage.toString(),
                       onTap: () {
-                        context.pushNamed(AppRoute.detailNews.name);
+                        context.pushNamed(
+                          AppRoute.detailNews.name,
+                          params: {'id': state.news.id.toString()},
+                        );
                       },
                       onPressedMore: () {},
                     ),
@@ -104,6 +107,12 @@ class HomeScreen extends StatelessWidget {
                     (news) {
                       return NewsCard(
                         news: news,
+                        onTap: () {
+                          context.pushNamed(
+                            AppRoute.detailNews.name,
+                            params: {'id': news.id.toString()},
+                          );
+                        },
                       );
                     },
                   ).toList(),
