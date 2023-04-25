@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:html/parser.dart';
 
 import 'package:flutter_kompas_app_clone/src/constants/app_sizes.dart';
 import 'package:flutter_kompas_app_clone/src/constants/theme.dart';
@@ -45,6 +46,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
               .reversed
               .join('-');
           String time = state.news.dateCreated!.substring(11, 16);
+          var content = parse(state.news.content!);
           return Scaffold(
               appBar: AppBar(
                 title: Image.asset(
@@ -125,13 +127,14 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                   gapH16,
                   // News
                   RichText(
+                    textAlign: TextAlign.justify  ,
                     text: TextSpan(
                       text: 'KOMPAS.com - ',
                       style: blackTextStyle.copyWith(
                           fontSize: 16, fontWeight: bold),
                       children: <TextSpan>[
                         TextSpan(
-                          text: state.news.content.toString(),
+                          text: content.body!.text,
                           style: blackTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: regular,
