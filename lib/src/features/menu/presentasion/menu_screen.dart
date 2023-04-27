@@ -61,6 +61,14 @@ class MenuScreen extends StatelessWidget {
                   (category) {
                     return MenuCategoryCardWidget(
                       category: category,
+                      onTap: () {
+                        context.pushNamed(
+                          AppRoute.detailMenu.name,
+                          params: {
+                            'id': category.id.toString(),
+                          },
+                        );
+                      },
                     );
                   },
                 ).toList(),

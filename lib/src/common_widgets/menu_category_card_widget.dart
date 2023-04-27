@@ -1,12 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_kompas_app_clone/src/features/menu/domain/category_model.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:flutter_kompas_app_clone/src/constants/app_sizes.dart';
 import 'package:flutter_kompas_app_clone/src/constants/theme.dart';
-
-import '../routing/app_router.dart';
 
 class MenuCategoryCardWidget extends StatelessWidget {
   const MenuCategoryCardWidget({
@@ -23,9 +20,7 @@ class MenuCategoryCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.pushNamed(AppRoute.detailMenu.name);
-      },
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(top: 15),
         height: MediaQuery.of(context).size.height * 0.15,

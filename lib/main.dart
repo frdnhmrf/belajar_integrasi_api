@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_kompas_app_clone/src/constants/theme.dart';
+import 'package:flutter_kompas_app_clone/src/features/menu/data/bloc/category_detail_bloc/category_detail_bloc.dart';
 import 'package:flutter_kompas_app_clone/src/features/menu/data/bloc/category_list_bloc/category_list_bloc.dart';
 import 'package:flutter_kompas_app_clone/src/features/news/data/bloc/news_detail_bloc/news_detail_bloc.dart';
 import 'package:flutter_kompas_app_clone/src/features/news/data/bloc/news_list_bloc/news_list_bloc.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => NewsDetailBloc(),
+        ),
+        BlocProvider(
+          create: (context) => CategoryDetailBloc(),
         ),
       ],
       child: MaterialApp.router(

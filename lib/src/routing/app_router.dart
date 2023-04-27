@@ -76,17 +76,24 @@ final goRouter = GoRouter(
                   }),
             ]),
         GoRoute(
-          path: 'detail-menu',
-          name: AppRoute.detailMenu.name,
-          builder: (context, state) => const DetailMenuScreen(),
-        ),
-        GoRoute(
           path: 'saved',
           builder: (context, state) => const SavedScreen(),
         ),
         GoRoute(
           path: 'menu',
           builder: (context, state) => const MenuScreen(),
+          routes: [
+            GoRoute(
+              path: 'detail-menu/:id',
+              name: AppRoute.detailMenu.name,
+              builder: (context, state) {
+                final id = state.params['id'];
+                return DetailMenuScreen(
+                  id: id!,
+                );
+              },
+            ),
+          ],
         ),
         GoRoute(
           name: AppRoute.search.name,
